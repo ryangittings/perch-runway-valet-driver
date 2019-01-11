@@ -12,9 +12,12 @@ class PerchRunwayValetDriver extends BasicValetDriver
      */
     public function serves($sitePath, $siteName, $uri)
     {
-        if (strpos($uri, 'admin') == false || strpos($uri, 'perch') == false) {
-          return is_dir($sitePath.'/admin/core/runway');
+        if (strpos($uri, 'admin') !== false || strpos($uri, 'perch') !== false) {
+          return false;
         }
+
+        
+        return is_dir($sitePath.'/admin/core/runway');
     }
 
     /**
@@ -30,6 +33,12 @@ class PerchRunwayValetDriver extends BasicValetDriver
         $_SERVER['PHP_SELF']    = $uri;
         $_SERVER['SERVER_ADDR'] = '127.0.0.1';
         $_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+        
+        if (strpos($uri, 'admin') !== false || strpos($uri, 'perch') !== false) {
+          return parent::frontControllerPath(
+            $sitePath, $siteName, $uri
+          );
+        }
 
         return parent::frontControllerPath(
           $sitePath, $siteName, '/admin/core/runway/start.php'
