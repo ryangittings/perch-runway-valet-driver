@@ -23,20 +23,6 @@ class PerchRunwayValetDriver extends BasicValetDriver
       return false;
     }
 
-    private function getFolder($sitePath) {
-      $activeFolder = false;
-
-      foreach ($this->folders as $folder) {
-        $isDirectory = is_dir($sitePath. '/' . $folder . '/core/runway'); ;
-        if ($isDirectory) {
-          $activeFolder = $folder;
-          break;
-        }
-      }
-
-      return $activeFolder;
-    }
-
     /**
      * Get the fully resolved path to the application's front controller.
      *
@@ -62,5 +48,25 @@ class PerchRunwayValetDriver extends BasicValetDriver
       return parent::frontControllerPath(
         $sitePath, $siteName, '/' . $folder . '/core/runway/start.php'
       );
+    }
+
+    /**
+     * Get active folder of project
+     *
+     * @param  string  $sitePath
+     * @return string
+     */
+    protected function getFolder($sitePath) {
+      $activeFolder = false;
+
+      foreach ($this->folders as $folder) {
+        $isDirectory = is_dir($sitePath. '/' . $folder . '/core/runway'); ;
+        if ($isDirectory) {
+          $activeFolder = $folder;
+          break;
+        }
+      }
+
+      return $activeFolder;
     }
 }
